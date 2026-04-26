@@ -1,10 +1,6 @@
 {
   "framework": "nextjs",
   "regions": ["bom1"],
-  "env": {
-    "GEMINI_API_KEY": "@gemini_api_key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
