@@ -56,25 +56,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       // Continue — don't fail the whole log because of session upsert
     }
 
-    // Increment message count separately (upsert doesn't support increment)
+    // Increment message count separately
     if (!sessionError) {
-      await supabase.rpc('increment_message_count', { session_uuid: sessionId }).catch(() => {
-        // If the RPC doesn't exist, update manually
-        supabase
+      const { error: rpcError } = await supabase.rpc('increment_message_count', {
+        session_uuid: sessionId,
+      })
+
+      if (rpcError) {
+        // If the RPC fails (e.g., doesn't exist yet), update manually
+        const { data } = await supabase
           .from('sessions')
           .select('message_count')
           .eq('id', sessionId)
           .single()
-          .then(({ data }) => {
-            if (data) {
-              supabase
-                .from('sessions')
-                .update({ message_count: (data.message_count || 0) + 1 })
-                .eq('id', sessionId)
-                .then(() => {})
-            }
-          })
-      })
+
+        if (data) {
+          await supabase
+            .from('sessions')
+            .update({ message_count: (data.message_count || 0) + 1 })
+            .eq('id', sessionId)
+        }
+      }
     }
 
     // ─── Step 2: Insert message ──────────────────────────────────────────
@@ -97,7 +99,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         .from('sessions')
         .update({ city })
         .eq('id', sessionId)
-        .then(() => {})
     }
 
     // Always return 200 — logging must never affect UX
