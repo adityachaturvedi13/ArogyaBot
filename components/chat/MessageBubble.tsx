@@ -87,7 +87,7 @@ export default function MessageBubble({
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
+      transition={{ duration: 0.2, ease: 'easeOut' as const }}
       className={`flex items-start gap-2 mb-4 group ${
         isUser ? 'flex-row-reverse' : 'flex-row'
       }`}

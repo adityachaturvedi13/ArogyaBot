@@ -46,7 +46,7 @@ export default function WelcomeMessage({ onQuickReply }: WelcomeMessageProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      transition={{ duration: 0.4, ease: 'easeOut' as const }}
       className="flex items-start gap-2 mb-4"
     >
       {/* Bot avatar */}
