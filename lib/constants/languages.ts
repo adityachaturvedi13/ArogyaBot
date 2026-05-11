@@ -3,7 +3,7 @@
  * Each entry maps a language code to its display name, native script name, and flag emoji.
  */
 
-import { Language } from '@/types'
+import { Language, LanguageCode } from '@/types'
 export type { LanguageCode } from '@/types'
 
 
