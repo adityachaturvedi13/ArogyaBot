@@ -25,9 +25,11 @@ export default function ChatWindow() {
   const bottomRef = useRef<HTMLDivElement>(null)
 
   /** Auto-scroll to bottom when messages change or streaming updates */
+  const lastMessageContent = messages[messages.length - 1]?.content
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages.length, messages[messages.length - 1]?.content, isStreaming])
+  }, [messages.length, lastMessageContent, isStreaming])
+
 
   /** Handle quick reply chip clicks from WelcomeMessage */
   const handleQuickReply = useCallback(

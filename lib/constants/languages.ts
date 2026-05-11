@@ -3,7 +3,9 @@
  * Each entry maps a language code to its display name, native script name, and flag emoji.
  */
 
-import { Language, LanguageCode } from '@/types'
+import { Language } from '@/types'
+export type { LanguageCode } from '@/types'
+
 
 /** All languages supported by ArogyaBot */
 export const SUPPORTED_LANGUAGES: Language[] = [
